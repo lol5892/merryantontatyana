@@ -513,23 +513,28 @@ section {
   /* Зазор после 4-го кадра = как между кадрами; тогда translate(-50%) совпадает с длиной одного цикла */
   padding-inline-end: var(--gallery-gap);
 }
-.gallery-track img {
-  width: var(--gallery-img-w);
+.gallery-slide {
   flex-shrink: 0;
-  /* Большой экран: классическая вертикаль 4:5 */
+  width: var(--gallery-img-w);
   aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: 46% 22%;
-  background: linear-gradient(180deg, rgba(255, 252, 250, 0.55), rgba(247, 239, 234, 0.45));
   border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 252, 250, 0.55), rgba(247, 239, 234, 0.45));
   box-shadow: 0 14px 36px rgba(51, 32, 19, 0.16), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
   transition:
     transform 0.45s var(--reveal-ease),
     box-shadow 0.45s var(--reveal-ease),
     opacity 0.55s var(--reveal-ease);
 }
+.gallery-slide img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 46% 22%;
+}
 @media (hover: hover) and (pointer: fine) {
-  .gallery-track img:hover {
+  .gallery-slide:hover {
     transform: translate3d(0, -3px, 0);
     box-shadow: 0 20px 44px rgba(51, 32, 19, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.35) inset;
   }
@@ -537,21 +542,6 @@ section {
 @keyframes gallery-marquee {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
-}
-@media (max-width: 780px) {
-  .gallery {
-    --gallery-gap: clamp(0.45rem, 1.8vmin, 0.65rem);
-    /* min(vw, vmin) — карточки не «шпильки» на узких телефонах и в альбоме */
-    --gallery-img-w: clamp(11.5rem, min(76vw, 42vmin), 19rem);
-    --gallery-marquee-dur: 28s;
-    padding: clamp(0.65rem, 2vmin, 1rem) 0 0;
-  }
-  .gallery-track img {
-    border-radius: 16px;
-    /* Ближе к квадрату, чем к вытянутому портрету */
-    aspect-ratio: 1 / 1;
-    object-position: 48% 36%;
-  }
 }
 @media (min-width: 1400px) {
   .gallery {
@@ -1771,7 +1761,7 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
-.gallery.reveal-stagger:not(.show) .gallery-set img {
+.gallery.reveal-stagger:not(.show) .gallery-set .gallery-slide img {
   opacity: 0;
   /* Без scale: во flex ряд соседи не «раздвигаются», и scale даёт ложное наложение */
   transform: translate3d(0, 20px, 0);
@@ -1779,16 +1769,16 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
     opacity var(--reveal-item-dur) var(--reveal-ease),
     transform var(--reveal-item-dur) var(--reveal-ease);
 }
-.gallery.reveal-stagger.show .gallery-set img {
+.gallery.reveal-stagger.show .gallery-set .gallery-slide img {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
-.gallery.reveal-stagger.show .gallery-set:first-child img:nth-child(1) { transition-delay: 0.12s; }
-.gallery.reveal-stagger.show .gallery-set:first-child img:nth-child(2) { transition-delay: 0.28s; }
-.gallery.reveal-stagger.show .gallery-set:first-child img:nth-child(3) { transition-delay: 0.44s; }
-.gallery.reveal-stagger.show .gallery-set:first-child img:nth-child(4) { transition-delay: 0.6s; }
+.gallery.reveal-stagger.show .gallery-set:first-child .gallery-slide:nth-child(1) img { transition-delay: 0.12s; }
+.gallery.reveal-stagger.show .gallery-set:first-child .gallery-slide:nth-child(2) img { transition-delay: 0.28s; }
+.gallery.reveal-stagger.show .gallery-set:first-child .gallery-slide:nth-child(3) img { transition-delay: 0.44s; }
+.gallery.reveal-stagger.show .gallery-set:first-child .gallery-slide:nth-child(4) img { transition-delay: 0.6s; }
 /* Клон для бесшовного цикла: появляется вместе с последним кадром первого ряда */
-.gallery.reveal-stagger.show .gallery-set:last-child img {
+.gallery.reveal-stagger.show .gallery-set:last-child .gallery-slide img {
   transition-delay: 0.6s;
 }
 
@@ -1894,8 +1884,8 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
   section.rsvp.reveal-stagger.show > *,
   .gallery.reveal-stagger:not(.show) .gallery-viewport,
   .gallery.reveal-stagger.show .gallery-viewport,
-  .gallery.reveal-stagger:not(.show) .gallery-set img,
-  .gallery.reveal-stagger.show .gallery-set img,
+  .gallery.reveal-stagger:not(.show) .gallery-set .gallery-slide img,
+  .gallery.reveal-stagger.show .gallery-set .gallery-slide img,
   .reveal-stagger:not(.show) .countdown-grid > div,
   .reveal-stagger.show .countdown-grid > div,
   .reveal-stagger:not(.show) .palette span,
@@ -1910,19 +1900,24 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
   }
 }
 
-@media (max-width: 780px) {
-  body { cursor: auto; }
-  a, button, input, select, textarea, label { cursor: auto !important; }
-  .cursor-glow { display: none; }
-  .nav-links { display: none; }
-  .nav {
-    padding: 0.5rem 0 0.25rem;
+/* Телефоны и узкие планшеты: квадратная галерея, FAB столбиком, модалки над кнопками */
+@media (max-width: 900px) {
+  .gallery {
+    --gallery-gap: clamp(0.45rem, 1.8vmin, 0.65rem);
+    --gallery-img-w: clamp(10.5rem, min(78vw, 46vmin), 18.5rem);
+    --gallery-marquee-dur: 28s;
+    padding: clamp(0.65rem, 2vmin, 1rem) 0 0;
   }
-  /*
-   * Звук + контакты всегда в потоке (не только после «меню»):
-   * иначе на телефоне кнопки сходятся в одну точку и верхнюю (звук) не видно / не нажать.
-   */
-  .fab-dock:not(.is-open) .fab-actions {
+  .gallery-slide {
+    aspect-ratio: 1 / 1;
+    border-radius: 16px;
+  }
+  .gallery-slide img {
+    object-position: 48% 36%;
+  }
+
+  .fab-dock:not(.is-open) .fab-actions,
+  .fab-dock.is-open .fab-actions {
     position: relative !important;
     bottom: auto !important;
     right: auto !important;
@@ -1930,24 +1925,21 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
     visibility: visible !important;
     pointer-events: auto !important;
     transition-delay: 0s !important;
+    flex-direction: column-reverse !important;
+    align-items: flex-end !important;
+    justify-content: flex-end !important;
+    gap: 0.42rem !important;
   }
   .fab-dock:not(.is-open) .fab-actions > :nth-child(1),
   .fab-dock:not(.is-open) .fab-actions > :nth-child(2) {
     transform: translate3d(0, 0, 0) scale(1) !important;
     opacity: 1 !important;
   }
-  /* Звук поверх контакта в одном ряду (оба круглые) */
-  .fab-sound-anchor {
-    position: relative;
-    z-index: 3;
-  }
-  .fab-contact-anchor {
-    position: relative;
-    z-index: 2;
-  }
-  /* FAB: панели поверх кнопки меню, не за краем экрана */
+
   .fab-dock {
     z-index: 10025;
+    max-width: none;
+    width: auto;
   }
   .fab-stack {
     position: relative;
@@ -1955,72 +1947,93 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
   }
   .fab-actions {
     position: relative;
-    z-index: 2;
+    z-index: 6;
   }
   .fab-main {
     position: relative;
     z-index: 1;
   }
+  .fab-sound-anchor {
+    position: relative;
+    z-index: 4;
+  }
+  .fab-contact-anchor {
+    position: relative;
+    z-index: 3;
+  }
+
+  .fab-dock.is-contact-open,
+  .fab-dock.is-sound-reveal,
+  .fab-dock.is-contact-tip-reveal {
+    z-index: 2147480000;
+  }
+  .fab-dock.is-contact-open .fab-main,
+  .fab-dock.is-sound-reveal .fab-main,
+  .fab-dock.is-contact-tip-reveal .fab-main {
+    z-index: 0;
+  }
   .fab-dock.is-contact-open .fab-actions,
   .fab-dock.is-sound-reveal .fab-actions,
   .fab-dock.is-contact-tip-reveal .fab-actions {
-    z-index: 10030;
+    z-index: 2147480001;
   }
+
   .fab-dock.is-contact-open .fab-contact-anchor {
     width: min(300px, calc(100vw - 2rem));
     overflow: visible;
   }
+
   .fab-dock.is-contact-open .fab-contact-anchor .fab-contact-panel {
     position: fixed !important;
-    left: max(0.65rem, env(safe-area-inset-left)) !important;
-    right: max(0.65rem, env(safe-area-inset-right)) !important;
-    bottom: calc(0.65rem + 54px + 0.45rem + 48px + 0.45rem + env(safe-area-inset-bottom)) !important;
+    left: max(0.5rem, env(safe-area-inset-left)) !important;
+    right: max(0.5rem, env(safe-area-inset-right)) !important;
+    bottom: max(11rem, calc(env(safe-area-inset-bottom) + 9.75rem)) !important;
     top: auto !important;
     width: auto !important;
     max-width: none !important;
-    max-height: min(72vh, 520px) !important;
+    max-height: min(68vh, 520px) !important;
     overflow-y: auto !important;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     transform: none !important;
     margin: 0 !important;
-    z-index: 10035 !important;
+    z-index: 2147483640 !important;
     border-radius: 18px;
     box-sizing: border-box;
   }
   .fab-dock.is-sound-reveal .sound-invite-morph {
     position: fixed !important;
-    left: max(0.65rem, env(safe-area-inset-left)) !important;
-    right: max(0.65rem, env(safe-area-inset-right)) !important;
-    bottom: calc(0.65rem + 54px + 0.45rem + 48px + 0.45rem + env(safe-area-inset-bottom)) !important;
+    left: max(0.5rem, env(safe-area-inset-left)) !important;
+    right: max(0.5rem, env(safe-area-inset-right)) !important;
+    bottom: max(11rem, calc(env(safe-area-inset-bottom) + 9.75rem)) !important;
     top: auto !important;
     width: auto !important;
     max-width: none !important;
-    max-height: min(62vh, 420px) !important;
+    max-height: min(58vh, 420px) !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     transform: none !important;
     margin: 0 !important;
-    z-index: 10035 !important;
+    z-index: 2147483640 !important;
     border-radius: 20px;
     box-sizing: border-box;
   }
   .fab-dock.is-contact-tip-reveal .contact-tip-morph {
     position: fixed !important;
-    left: max(0.65rem, env(safe-area-inset-left)) !important;
-    right: max(0.65rem, env(safe-area-inset-right)) !important;
-    bottom: calc(0.65rem + 54px + 0.45rem + 48px + 0.45rem + env(safe-area-inset-bottom)) !important;
+    left: max(0.5rem, env(safe-area-inset-left)) !important;
+    right: max(0.5rem, env(safe-area-inset-right)) !important;
+    bottom: max(11rem, calc(env(safe-area-inset-bottom) + 9.75rem)) !important;
     top: auto !important;
     width: auto !important;
     max-width: none !important;
-    max-height: min(55vh, 380px) !important;
+    max-height: min(52vh, 380px) !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
     transform: none !important;
     margin: 0 !important;
-    z-index: 10035 !important;
+    z-index: 2147483640 !important;
     justify-self: stretch;
     box-sizing: border-box;
   }
@@ -2034,7 +2047,20 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
   .sound-invite-close {
     cursor: auto !important;
   }
-  .contact-toggle { width: 46px; height: 46px; }
+  .contact-toggle {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+@media (max-width: 780px) {
+  body { cursor: auto; }
+  a, button, input, select, textarea, label { cursor: auto !important; }
+  .cursor-glow { display: none; }
+  .nav-links { display: none; }
+  .nav {
+    padding: 0.5rem 0 0.25rem;
+  }
   .story::before { top: 2rem; font-size: clamp(2rem, 12vw, 3.2rem); }
   .story-card { padding: 1.2rem 1rem; }
   .story-sign { font-size: 1.45rem !important; }

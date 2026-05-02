@@ -470,7 +470,7 @@ const setFabOpen = (open, opts = {}) => {
   fabMain.setAttribute("aria-expanded", open ? "true" : "false");
   fabMain.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
   const fabRowShown =
-    (typeof window.matchMedia === "function" && window.matchMedia("(max-width: 780px)").matches) ||
+    (typeof window.matchMedia === "function" && window.matchMedia("(max-width: 900px)").matches) ||
     open;
   fabActions?.setAttribute("aria-hidden", fabRowShown ? "false" : "true");
   if (open) {
@@ -524,7 +524,7 @@ if (fabMain && fabDock) {
 (() => {
   if (!fabDock || !fabActions) return;
   const isMobileFab = () =>
-    typeof window.matchMedia === "function" && window.matchMedia("(max-width: 780px)").matches;
+    typeof window.matchMedia === "function" && window.matchMedia("(max-width: 900px)").matches;
   const syncFabActionsAria = () => {
     fabActions.setAttribute(
       "aria-hidden",
@@ -533,7 +533,7 @@ if (fabMain && fabDock) {
   };
   syncFabActionsAria();
   if (typeof window.matchMedia === "function") {
-    const m = window.matchMedia("(max-width: 780px)");
+    const m = window.matchMedia("(max-width: 900px)");
     if (typeof m.addEventListener === "function") m.addEventListener("change", syncFabActionsAria);
     else if (typeof m.addListener === "function") m.addListener(syncFabActionsAria);
   }
