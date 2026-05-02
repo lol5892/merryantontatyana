@@ -1916,6 +1916,9 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
     object-position: 48% 36%;
   }
 
+  /*
+   * Простая схема: один ряд [звук][контакты] строго НАД кругом меню (без column-reverse).
+   */
   .fab-dock:not(.is-open) .fab-actions,
   .fab-dock.is-open .fab-actions {
     position: relative !important;
@@ -1925,15 +1928,24 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
     visibility: visible !important;
     pointer-events: auto !important;
     transition-delay: 0s !important;
-    flex-direction: column-reverse !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
     align-items: flex-end !important;
     justify-content: flex-end !important;
-    gap: 0.42rem !important;
+    gap: 0.55rem !important;
+    width: auto !important;
+    min-height: 48px;
   }
   .fab-dock:not(.is-open) .fab-actions > :nth-child(1),
-  .fab-dock:not(.is-open) .fab-actions > :nth-child(2) {
+  .fab-dock:not(.is-open) .fab-actions > :nth-child(2),
+  .fab-dock.is-open .fab-actions > :nth-child(1),
+  .fab-dock.is-open .fab-actions > :nth-child(2) {
     transform: translate3d(0, 0, 0) scale(1) !important;
     opacity: 1 !important;
+  }
+  .fab-dock.is-open.is-contact-open .fab-sound-anchor {
+    transform: none !important;
   }
 
   .fab-dock {
@@ -1944,22 +1956,35 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
   .fab-stack {
     position: relative;
     z-index: 0;
+    gap: 0.65rem !important;
+    justify-content: flex-end;
   }
   .fab-actions {
     position: relative;
-    z-index: 6;
+    z-index: 8;
+    pointer-events: auto !important;
   }
   .fab-main {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    flex-shrink: 0;
   }
   .fab-sound-anchor {
     position: relative;
-    z-index: 4;
+    z-index: 5;
+    flex-shrink: 0;
+    pointer-events: auto !important;
   }
   .fab-contact-anchor {
     position: relative;
-    z-index: 3;
+    z-index: 4;
+    flex-shrink: 0;
+    pointer-events: auto !important;
+  }
+  .fab-sound-anchor #soundToggle,
+  .fab-contact-anchor #contactToggle {
+    position: relative;
+    z-index: 2;
   }
 
   .fab-dock.is-contact-open,
