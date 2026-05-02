@@ -508,10 +508,12 @@ section {
 .gallery-track img {
   width: var(--gallery-img-w);
   flex-shrink: 0;
-  aspect-ratio: 4/5;
-  object-fit: contain;
-  object-position: center;
-  background: linear-gradient(180deg, rgba(255, 252, 250, 0.96), rgba(247, 239, 234, 0.88));
+  /* 3:4 ближе к типичным портретам, чем 4:5 — меньше «пустых» полей при cover */
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  /* Чуть выше центра — лица чаще в верхней части кадра; по горизонтали чуть левее центра — меньше обрезание справа у парных кадров */
+  object-position: 46% 24%;
+  background: linear-gradient(180deg, rgba(255, 252, 250, 0.55), rgba(247, 239, 234, 0.45));
   border-radius: 20px;
   box-shadow: 0 14px 36px rgba(51, 32, 19, 0.16), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
   transition:
@@ -1905,6 +1907,24 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
   .nav {
     padding: 0.5rem 0 0.25rem;
   }
+  /*
+   * Звук + контакты всегда в потоке (не только после «меню»):
+   * иначе на телефоне кнопки сходятся в одну точку и верхнюю (звук) не видно / не нажать.
+   */
+  .fab-dock:not(.is-open) .fab-actions {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    left: auto;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+  .fab-dock:not(.is-open) .fab-actions > :nth-child(1),
+  .fab-dock:not(.is-open) .fab-actions > :nth-child(2) {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
   /* FAB: панели поверх кнопки меню, не за краем экрана */
   .fab-dock {
     z-index: 10025;
@@ -1934,7 +1954,7 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
     position: fixed !important;
     left: max(0.65rem, env(safe-area-inset-left)) !important;
     right: max(0.65rem, env(safe-area-inset-right)) !important;
-    bottom: calc(0.75rem + 54px + 0.55rem + env(safe-area-inset-bottom)) !important;
+    bottom: calc(0.65rem + 54px + 0.45rem + 48px + 0.45rem + env(safe-area-inset-bottom)) !important;
     top: auto !important;
     width: auto !important;
     max-width: none !important;
@@ -1953,7 +1973,7 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
     position: fixed !important;
     left: max(0.65rem, env(safe-area-inset-left)) !important;
     right: max(0.65rem, env(safe-area-inset-right)) !important;
-    bottom: calc(0.75rem + 54px + 0.55rem + env(safe-area-inset-bottom)) !important;
+    bottom: calc(0.65rem + 54px + 0.45rem + 48px + 0.45rem + env(safe-area-inset-bottom)) !important;
     top: auto !important;
     width: auto !important;
     max-width: none !important;
@@ -1971,7 +1991,7 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
     position: fixed !important;
     left: max(0.65rem, env(safe-area-inset-left)) !important;
     right: max(0.65rem, env(safe-area-inset-right)) !important;
-    bottom: calc(0.75rem + 54px + 0.55rem + env(safe-area-inset-bottom)) !important;
+    bottom: calc(0.65rem + 54px + 0.45rem + 48px + 0.45rem + env(safe-area-inset-bottom)) !important;
     top: auto !important;
     width: auto !important;
     max-width: none !important;

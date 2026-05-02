@@ -469,7 +469,10 @@ const setFabOpen = (open, opts = {}) => {
   fabDock.classList.toggle("is-open", open);
   fabMain.setAttribute("aria-expanded", open ? "true" : "false");
   fabMain.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
-  fabActions?.setAttribute("aria-hidden", open ? "false" : "true");
+  const fabRowShown =
+    (typeof window.matchMedia === "function" && window.matchMedia("(max-width: 780px)").matches) ||
+    open;
+  fabActions?.setAttribute("aria-hidden", fabRowShown ? "false" : "true");
   if (open) {
     document.dispatchEvent(new CustomEvent("weddingFabOpened", { bubbles: true }));
   }
@@ -517,6 +520,25 @@ if (fabMain && fabDock) {
     }
   });
 }
+
+(() => {
+  if (!fabDock || !fabActions) return;
+  const isMobileFab = () =>
+    typeof window.matchMedia === "function" && window.matchMedia("(max-width: 780px)").matches;
+  const syncFabActionsAria = () => {
+    fabActions.setAttribute(
+      "aria-hidden",
+      isMobileFab() || fabDock.classList.contains("is-open") ? "false" : "true",
+    );
+  };
+  syncFabActionsAria();
+  if (typeof window.matchMedia === "function") {
+    const m = window.matchMedia("(max-width: 780px)");
+    if (typeof m.addEventListener === "function") m.addEventListener("change", syncFabActionsAria);
+    else if (typeof m.addListener === "function") m.addListener(syncFabActionsAria);
+  }
+  window.addEventListener("resize", syncFabActionsAria, { passive: true });
+})();
 
 if (fabDock && contactToggle && contactPanel) {
   contactToggle.addEventListener("click", (event) => {
