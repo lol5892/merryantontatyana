@@ -1,0 +1,17 @@
+# Blueprint для https://render.com — после push в GitHub: New → Blueprint → выбрать репозиторий.
+# В панели Render задайте TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID (Environment).
+
+services:
+  - type: web
+    name: wedding-invite
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false

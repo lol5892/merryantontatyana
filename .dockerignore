@@ -1,0 +1,8 @@
+.env
+.git
+.gitignore
+node_modules
+*.md
+DEPLOY.txt
+agent-transcripts
+terminals

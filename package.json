@@ -1,0 +1,11 @@
+{
+  "name": "wedding-invite",
+  "private": true,
+  "description": "Свадебное приглашение + RSVP в Telegram",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

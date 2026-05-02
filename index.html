@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Антон и Татьяна - Свадебное приглашение</title>
+  <meta name="description" content="Интерактивное приглашение на свадьбу Антона и Татьяны">
+  <!-- Если открываете сайт через Live Server (другой порт), укажите здесь адрес Node: http://localhost:3000 -->
+  <meta name="wedding-rsvp-api" content="">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="hero" id="top">
+    <div class="hero-backdrop"></div>
+    <nav class="nav container">
+      <div class="nav-links">
+        <a href="#story">Наша история</a>
+        <a href="#timeline">Программа</a>
+        <a href="#place">Место</a>
+        <a href="#rsvp">Подтверждение присутствия</a>
+      </div>
+    </nav>
+    <nav class="nav-mobile-rail" aria-label="Разделы сайта">
+      <a href="#story">Наша история</a>
+      <a href="#timeline">Программа</a>
+      <a href="#place">Место</a>
+      <a href="#rsvp">Подтверждение присутствия</a>
+    </nav>
+
+    <div class="hero-content container reveal">
+      <p class="hero-date">05 июля 2024</p>
+      <h1>Антон <span>&amp;</span> Татьяна</h1>
+      <p class="hero-subtitle">Приглашение на свадьбу</p>
+      <div class="hero-actions">
+        <a href="#rsvp" class="btn-primary">Подтвердить присутствие</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="story container reveal reveal-stagger" id="story">
+      <p class="story-kicker">Наша история</p>
+      <h2>Мы женимся</h2>
+      <div class="story-card">
+        <p>
+          Дорогие друзья, родные и близкие!<br><br>
+          Мы счастливы пригласить вас на нашу свадьбу.
+          Для нас очень важно, чтобы вы смогли разделить с нами
+          самое счастливое мгновение в нашей жизни.
+        </p>
+        <p class="story-date">05 июля 2024 года</p>
+        <p class="story-sign">С любовью, Антон и Татьяна</p>
+      </div>
+    </section>
+
+    <section class="countdown container reveal reveal-stagger">
+      <h2>До нашего дня</h2>
+      <p id="countdownCaption" class="countdown-caption" aria-live="polite"></p>
+      <div id="countdownGrid" class="countdown-grid">
+        <div><strong id="days">00</strong><span>дней</span></div>
+        <div><strong id="hours">00</strong><span>часов</span></div>
+        <div><strong id="minutes">00</strong><span>минут</span></div>
+        <div><strong id="seconds">00</strong><span>секунд</span></div>
+      </div>
+    </section>
+
+    <section class="gallery reveal reveal-stagger">
+      <div class="gallery-track" id="galleryTrack">
+        <img src="./assets/static.tildacdn.pub/NAD_4947.jpg" alt="Фото пары 1">
+        <img src="./assets/static.tildacdn.pub/NAD_5437.jpg" alt="Фото пары 2">
+        <img src="./assets/static.tildacdn.pub/NAD_5279.jpg" alt="Фото пары 3">
+        <img src="./assets/static.tildacdn.pub/NAD_5497.jpg" alt="Фото пары 4">
+        <img src="./assets/static.tildacdn.pub/NAD_4947.jpg" alt="" aria-hidden="true">
+      </div>
+    </section>
+
+    <section class="timeline container reveal reveal-stagger" id="timeline">
+      <h2>Программа дня</h2>
+      <div class="timeline-list">
+        <article class="timeline-item">
+          <time>13:45</time>
+          <img src="./assets/static.tildacdn.pub/free-icon-romantic-d.png" alt="">
+          <p>Фуршет</p>
+        </article>
+        <article class="timeline-item">
+          <time>14:30</time>
+          <img src="./assets/static.tildacdn.pub/free-icon-bus-412563.png" alt="">
+          <p>Сбор и трансфер из Архангельска</p>
+        </article>
+        <article class="timeline-item">
+          <time>15:30</time>
+          <img src="./assets/static.tildacdn.pub/free-icon-bus-312429.png" alt="">
+          <p>Сбор и трансфер из Северодвинска</p>
+        </article>
+        <article class="timeline-item">
+          <time>16:00</time>
+          <img src="./assets/static.tildacdn.pub/free-icon-marriage-7.png" alt="">
+          <p>Торжественная церемония</p>
+        </article>
+        <article class="timeline-item">
+          <time>17:00</time>
+          <img src="./assets/static.tildacdn.pub/free-icon-banquet-41.png" alt="">
+          <p>Банкет</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="dresscode container reveal reveal-stagger">
+      <h2>Дресс-код</h2>
+      <p>Нам будет приятно, если вы поддержите стилистику свадьбы.</p>
+      <div class="palette">
+        <span class="palette-swatch" tabindex="0" role="button" aria-label="Выбрать одежду по цвету" style="--c:#efe4de"></span>
+        <span class="palette-swatch" tabindex="0" role="button" aria-label="Выбрать одежду по цвету" style="--c:#d6bfb0"></span>
+        <span class="palette-swatch" tabindex="0" role="button" aria-label="Выбрать одежду по цвету" style="--c:#ba9a85"></span>
+        <span class="palette-swatch" tabindex="0" role="button" aria-label="Выбрать одежду по цвету" style="--c:#85695b"></span>
+        <span class="palette-swatch" tabindex="0" role="button" aria-label="Выбрать одежду по цвету" style="--c:#362e2d"></span>
+      </div>
+    </section>
+
+    <section class="place reveal reveal-stagger" id="place">
+      <div class="container place-card">
+        <div>
+          <h2>Место</h2>
+          <p>Приморский р-н, д. Малые Карелы<br>Туристический комплекс "Малые Карелы"<br>Шатер "Звездный дождь"</p>
+          <div class="place-card-actions">
+            <a class="btn-secondary" target="_blank" rel="noopener noreferrer" href="https://yandex.ru/maps/-/CPSP6H4W">Открыть карту</a>
+            <a
+              class="btn-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="./assets/prezentaciya-malye-karely.pdf"
+              title="Презентация в формате PDF"
+            >Подробнее о месте</a>
+          </div>
+        </div>
+        <img src="./assets/static.tildacdn.pub/NAD_5114.jpg" alt="Локация">
+      </div>
+    </section>
+
+    <section class="rsvp container reveal reveal-stagger" id="rsvp">
+      <h2>Подтверждение присутствия</h2>
+      <p>Пожалуйста, ответьте до 1 мая 2024 года.</p>
+      <form id="rsvpForm" novalidate>
+        <input type="text" name="name" placeholder="Ваше имя" required minlength="2" maxlength="60" autocomplete="name" aria-describedby="error-name">
+        <p class="field-error" data-for="name" id="error-name" aria-live="polite"></p>
+        <select name="attendance" required aria-describedby="error-attendance">
+          <option value="">Планируете присутствовать?</option>
+          <option value="yes">Да, буду</option>
+          <option value="no">К сожалению, не смогу</option>
+        </select>
+        <p class="field-error" data-for="attendance" id="error-attendance" aria-live="polite"></p>
+        <textarea name="comment" rows="4" placeholder="Комментарий (необязательно)" maxlength="300" aria-describedby="error-comment"></textarea>
+        <p class="field-error" data-for="comment" id="error-comment" aria-live="polite"></p>
+        <p id="commentCounter" class="comment-counter" aria-live="polite">0/300</p>
+        <button type="submit">Отправить ответ</button>
+      </form>
+      <p id="formMessage" class="form-message"></p>
+    </section>
+  </main>
+
+  <div class="fab-dock" id="fabDock">
+    <div class="fab-stack">
+      <div id="fabActions" class="fab-actions" role="group" aria-label="Быстрые действия" aria-hidden="true">
+        <div class="fab-sound-anchor" id="fabSoundAnchor">
+          <button
+            id="soundToggle"
+            class="fab-btn fab-btn-sound sound-toggle"
+            type="button"
+            aria-label="Звук: выкл"
+            aria-pressed="false"
+            title="Включить звук"
+          >
+            <svg class="sound-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 9v6h4l5 4V5L8 9H4z"></path>
+              <path class="sound-waves" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"></path>
+              <path class="sound-waves" d="M14 3.23v2.06c2.89 1.04 5 3.8 5 6.71s-2.11 5.67-5 6.71v2.06c4.01-1.17 7-4.87 7-8.77s-2.99-7.6-7-8.77z"></path>
+              <path class="sound-off" d="M3 3l18 18"></path>
+            </svg>
+          </button>
+          <div id="soundInvite" class="sound-invite-morph" role="dialog" aria-labelledby="soundInviteTitle" aria-hidden="true">
+            <button type="button" class="sound-invite-close" id="soundInviteClose" aria-label="Закрыть">×</button>
+            <p id="soundInviteTitle" class="sound-invite-text">
+              Мы очень хотели бы, чтобы вы услышали эту песню перед свадьбой. На празднике она сыграет свою роль — включите её кнопкой ниже.
+            </p>
+            <button
+              type="button"
+              id="soundInvitePlay"
+              class="sound-invite-cta sound-toggle is-off"
+              aria-label="Включить музыку"
+              title="Включить музыку"
+            >
+              <svg class="sound-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 9v6h4l5 4V5L8 9H4z"></path>
+                <path class="sound-waves" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"></path>
+                <path class="sound-waves" d="M14 3.23v2.06c2.89 1.04 5 3.8 5 6.71s-2.11 5.67-5 6.71v2.06c4.01-1.17 7-4.87 7-8.77s-2.99-7.6-7-8.77z"></path>
+                <path class="sound-off" d="M3 3l18 18"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="fab-contact-anchor" id="fabContactAnchor">
+          <button
+            id="contactToggle"
+            class="fab-btn fab-btn-contact"
+            type="button"
+            aria-expanded="false"
+            aria-controls="contactPanel"
+            aria-label="Контакты для связи"
+            title="Контакты"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6.6 2.5c.4-.4 1-.6 1.6-.4l2.6.9c.8.3 1.2 1.1 1 1.9l-.4 2a1.5 1.5 0 0 1-1.3 1.2l-1.2.2a12.2 12.2 0 0 0 6.7 6.7l.2-1.2a1.5 1.5 0 0 1 1.2-1.3l2-.4c.8-.2 1.6.2 1.9 1l.9 2.6c.2.6 0 1.2-.4 1.6l-1.7 1.7c-.6.6-1.4.8-2.1.6C9.4 18 6 14.6 3.9 10.4c-.2-.7 0-1.5.6-2.1L6.6 2.5z"/>
+            </svg>
+          </button>
+          <div id="contactPanel" class="contact-panel fab-contact-panel" aria-hidden="true">
+            <p class="contact-panel-title">Контакты для связи</p>
+            <div class="contact-person">
+              <p class="contact-name">Антон</p>
+              <div class="contact-actions">
+                <a class="contact-phone" href="tel:+79600084843">+7 (960) 008-48-43</a>
+                <a class="contact-vk" href="https://vk.com/lol5892" target="_blank" rel="noreferrer">VK</a>
+              </div>
+            </div>
+            <div class="contact-person">
+              <p class="contact-name">Татьяна</p>
+              <div class="contact-actions">
+                <a class="contact-phone" href="tel:+79014856774">+7 (901) 485-67-74</a>
+                <a class="contact-vk" href="https://vk.com/t.elukova" target="_blank" rel="noreferrer">VK</a>
+              </div>
+            </div>
+            <div class="contact-person">
+              <p class="contact-name">Организатор Светлана</p>
+              <div class="contact-actions">
+                <a class="contact-phone" href="tel:+79212402929">8 (921) 240-29-29</a>
+                <a class="contact-vk" href="https://vk.com/id175994445" target="_blank" rel="noreferrer">VK</a>
+              </div>
+            </div>
+          </div>
+          <div
+            id="contactTipMorph"
+            class="contact-tip-morph"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contactTipTitle"
+            aria-hidden="true"
+          >
+            <p id="contactTipTitle" class="contact-tip-title">Как с нами связаться</p>
+            <p class="contact-tip-text">
+              В меню справа внизу нажмите кнопку с <strong>изображением телефона</strong> — откроются номера и ссылки для связи.
+            </p>
+            <button type="button" class="contact-tip-ok" id="contactTipOk">Хорошо</button>
+          </div>
+        </div>
+      </div>
+      <button
+        id="fabMain"
+        class="fab-main"
+        type="button"
+        aria-expanded="false"
+        aria-controls="fabActions"
+        aria-label="Открыть меню"
+        title="Меню"
+      >
+        <span class="fab-main-bars" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <button
+    type="button"
+    id="scrollTopBar"
+    class="scroll-top-bar"
+    aria-label="Наверх к началу страницы"
+    title="Наверх"
+  >
+    <span class="scroll-top-bar-inner" aria-hidden="true">
+      <svg class="scroll-top-bar-icon" width="18" height="18" viewBox="0 0 24 24" focusable="false">
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 20V9m0 0l-4.5 4.5M12 9l4.5 4.5"
+        />
+      </svg>
+      <span class="scroll-top-bar-label">Наверх</span>
+    </span>
+  </button>
+  <audio id="ambientAudio" loop preload="auto">
+    <source src="./assets/ambient.mp3" type="audio/mpeg">
+  </audio>
+
+  <footer class="footer reveal">
+    <p>С любовью, Антон и Татьяна</p>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+</html>
