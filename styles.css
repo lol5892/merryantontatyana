@@ -1972,14 +1972,22 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
   .fab-sound-anchor {
     position: relative;
     z-index: 5;
+    width: 48px !important;
+    min-width: 48px;
     flex-shrink: 0;
     pointer-events: auto !important;
+    overflow: visible;
   }
   .fab-contact-anchor {
     position: relative;
     z-index: 4;
+    width: 48px !important;
+    min-width: 48px;
     flex-shrink: 0;
     pointer-events: auto !important;
+    overflow: visible;
+    opacity: 1 !important;
+    filter: none !important;
   }
   .fab-sound-anchor #soundToggle,
   .fab-contact-anchor #contactToggle {
@@ -1992,6 +2000,9 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
   .fab-dock.is-contact-tip-reveal {
     z-index: 2147480000;
   }
+  .fab-dock.is-sound-reveal .fab-contact-anchor {
+    pointer-events: auto !important;
+  }
   .fab-dock.is-contact-open .fab-main,
   .fab-dock.is-sound-reveal .fab-main,
   .fab-dock.is-contact-tip-reveal .fab-main {
@@ -2001,11 +2012,6 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
   .fab-dock.is-sound-reveal .fab-actions,
   .fab-dock.is-contact-tip-reveal .fab-actions {
     z-index: 2147480001;
-  }
-
-  .fab-dock.is-contact-open .fab-contact-anchor {
-    width: min(300px, calc(100vw - 2rem));
-    overflow: visible;
   }
 
   .fab-dock.is-contact-open .fab-contact-anchor .fab-contact-panel {
