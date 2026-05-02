@@ -154,7 +154,19 @@ function serveStatic(req, res, pathname) {
       ".mp3": "audio/mpeg",
       ".php": "text/plain; charset=utf-8",
     };
-    res.writeHead(200, { "Content-Type": typeMap[ext] || "application/octet-stream" });
+    const mime = typeMap[ext] || "application/octet-stream";
+    const cache =
+      ext === ".html"
+        ? "no-cache, no-store, must-revalidate"
+        : ext === ".css" || ext === ".js"
+          ? "no-cache, must-revalidate"
+          : ext === ".mp3" || ext === ".jpg" || ext === ".jpeg" || ext === ".png" || ext === ".svg" || ext === ".webp"
+            ? "public, max-age=86400"
+            : "no-cache, must-revalidate";
+    res.writeHead(200, {
+      "Content-Type": mime,
+      "Cache-Control": cache,
+    });
     res.end(data);
   });
 }

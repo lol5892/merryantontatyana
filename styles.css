@@ -1923,18 +1923,27 @@ section.story.reveal-stagger:not(.rsvp) > *:nth-child(8) { transition-delay: 1.5
    * иначе на телефоне кнопки сходятся в одну точку и верхнюю (звук) не видно / не нажать.
    */
   .fab-dock:not(.is-open) .fab-actions {
-    position: relative;
-    bottom: auto;
-    right: auto;
-    left: auto;
-    visibility: visible;
-    pointer-events: auto;
-    transition-delay: 0s;
+    position: relative !important;
+    bottom: auto !important;
+    right: auto !important;
+    left: auto !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transition-delay: 0s !important;
   }
   .fab-dock:not(.is-open) .fab-actions > :nth-child(1),
   .fab-dock:not(.is-open) .fab-actions > :nth-child(2) {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) !important;
+    opacity: 1 !important;
+  }
+  /* Звук поверх контакта в одном ряду (оба круглые) */
+  .fab-sound-anchor {
+    position: relative;
+    z-index: 3;
+  }
+  .fab-contact-anchor {
+    position: relative;
+    z-index: 2;
   }
   /* FAB: панели поверх кнопки меню, не за краем экрана */
   .fab-dock {
